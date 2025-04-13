@@ -6,12 +6,14 @@ Universidade Federal do Paraná - UFPR
 
 ---
 
-*DS\<numero da matéria\> - \<nome da matéria\>*
+*DS151 - Desenvolvimento Mobile*
 
-Prof. \<nome do professor\>
+Prof. Alessandro Brawerman
 
-# \<nome do projeto\>
+# Trabalho avaliativo 1
 \<descrição do projeto\>
 
 ## Alunos
+- Alisson Gabriel Santos [@AlissonGSanto](https://github.com/AlissonGSantos)
 - Leonardo Felipe Salgado [@Salgado2004](https://github.com/Salgado2004)
+- Mateus Bazan Bespalhok [@matbaaz](https://github.com/matbaaz)
