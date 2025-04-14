@@ -3,6 +3,7 @@ package br.ufpr.mobile.trabalho1
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -23,6 +24,17 @@ class MainActivity : AppCompatActivity() {
 
     fun showCreators(view: View){
         val intent = Intent(this, CreatorsActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun startGame(view: View) {
+        val intent = Intent(this, GameActivity::class.java)
+        val nameImput = findViewById<EditText>(R.id.editTextNome)
+
+        val name = nameImput.text.toString()
+
+        intent.putExtra("userName", name)
+
         startActivity(intent)
     }
 }
