@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/amaranth_bold_italic"
@@ -41,10 +42,13 @@
         android:id="@+id/buttonStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
         android:onClick="startGame"
         android:text="Começar!"
-        tools:layout_editor_absoluteX="127dp"
-        tools:layout_editor_absoluteY="362dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNome"
+        app:layout_constraintVertical_bias="0.502" />
 
     <TextView
         android:id="@+id/textView5"
@@ -53,16 +57,22 @@
         android:fontFamily="@font/amaranth_bold_italic"
         android:text="Qual seu nome?"
         android:textSize="22sp"
-        tools:layout_editor_absoluteX="107dp"
-        tools:layout_editor_absoluteY="163dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintVertical_bias="0.092" />
 
     <EditText
         android:id="@+id/editTextNome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="112dp"
         android:ems="10"
         android:inputType="text"
-        tools:layout_editor_absoluteX="79dp"
-        tools:layout_editor_absoluteY="242dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
