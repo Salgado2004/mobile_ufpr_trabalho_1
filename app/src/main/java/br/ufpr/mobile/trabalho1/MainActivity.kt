@@ -33,8 +33,7 @@ class MainActivity : AppCompatActivity() {
         val nameImput = findViewById<EditText>(R.id.editTextNome)
 
         val name = nameImput.text.toString()
-
-        var user = User(name,0)
+        val user = User(name,0)
 
         intent.putExtra("user", user)
 
