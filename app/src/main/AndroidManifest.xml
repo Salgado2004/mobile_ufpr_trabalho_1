@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/myappicon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -17,6 +17,8 @@
             android:exported="false" />
         <activity
             android:name=".activity.CreatorsActivity"
+            android:exported="false" />
+        <activity android:name=".activity.FinalActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
