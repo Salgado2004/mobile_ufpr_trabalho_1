@@ -1,6 +1,8 @@
 package br.ufpr.mobile.trabalho1.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -9,20 +11,26 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.ufpr.mobile.trabalho1.R
+import br.ufpr.mobile.trabalho1.User
 import kotlin.random.Random
 
 class GameActivity : AppCompatActivity() {
     var contador: Int = 0
     var resposta: Int = 0
+    lateinit var jogador: User
+    lateinit var tela: ConstraintLayout
     lateinit var viewContador: TextView
+    lateinit var viewIntro: TextView
     lateinit var viewExpression: TextView
     lateinit var viewResposta: TextView
     lateinit var editAnswer: EditText
     lateinit var buttonVerify: Button
     lateinit var buttonNext: Button
+    lateinit var buttonFinish: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,18 +42,37 @@ class GameActivity : AppCompatActivity() {
             insets
         }
 
-        viewContador = findViewById(R.id.viewContador)
-        viewExpression = findViewById(R.id.viewExpression)
-        viewResposta = findViewById(R.id.viewResposta)
-        editAnswer = findViewById(R.id.editAnswer)
-        buttonVerify = findViewById(R.id.verifyButton)
-        buttonNext = findViewById(R.id.nextButton)
+        val bundle = intent.extras
 
-        buttonNext.setOnClickListener {
+        bundle?.let { dados ->
+            val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                dados.getParcelable("user", User::class.java)
+            } else {
+                dados.getParcelable("user")
+            }
+
+            if (data != null) {
+                jogador = data
+            }
+
+            tela = findViewById(R.id.main)
+            viewContador = findViewById(R.id.viewContador)
+            viewIntro = findViewById(R.id.viewIntro)
+            viewExpression = findViewById(R.id.viewExpression)
+            viewResposta = findViewById(R.id.viewResposta)
+            editAnswer = findViewById(R.id.editAnswer)
+            buttonVerify = findViewById(R.id.verifyButton)
+            buttonNext = findViewById(R.id.nextButton)
+            buttonFinish = findViewById(R.id.finishButton)
+
+            viewIntro.text = "${jogador.userName}, responda corretamente a expressão abaixo"
+
+            buttonNext.setOnClickListener {
+                nextQuestion()
+            }
+
             nextQuestion()
-        }
-
-        nextQuestion()
+        } ?: throw RuntimeException("Intent está null")
     }
 
     @SuppressLint("SetTextI18n")
@@ -66,6 +93,9 @@ class GameActivity : AppCompatActivity() {
             viewResposta.visibility = View.INVISIBLE
         } else {
             buttonNext.isEnabled = false
+            buttonVerify.isEnabled = false
+            buttonFinish.isEnabled = true
+            buttonFinish.visibility = View.VISIBLE
         }
     }
 
@@ -74,14 +104,22 @@ class GameActivity : AppCompatActivity() {
             val answer = editAnswer.text.toString().toInt()
             if (answer == resposta){
                 viewResposta.text = "Correto!"
+                jogador.rights++
             } else {
                 viewResposta.text = "Incorreto!"
             }
+
             viewResposta.visibility = View.VISIBLE
             buttonVerify.isEnabled = false
             buttonNext.isEnabled = true
+            if (contador == 5) contador++
         } catch (ex: NumberFormatException){
             Toast.makeText(this, "Insira um número válido!", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun finish(view: View) {
+        val intent = Intent(this, FinalActivity::class.java)
+        intent.putExtra("user", jogador)
     }
 }
