@@ -18,6 +18,8 @@
         <activity
             android:name=".activity.CreatorsActivity"
             android:exported="false" />
+        <activity android:name=".activity.FinalActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
