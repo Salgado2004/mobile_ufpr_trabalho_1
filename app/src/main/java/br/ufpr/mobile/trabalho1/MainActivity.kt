@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         var user = User(name,0)
 
-        intent.putExtra("userName", name)
+        intent.putExtra("user", name)
 
         startActivity(intent)
     }
