@@ -2,6 +2,7 @@ package br.ufpr.mobile.trabalho1.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.ufpr.mobile.trabalho1.R
@@ -78,6 +80,7 @@ class GameActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     fun nextQuestion() {
         contador++
+        tela.background = ColorDrawable(ContextCompat.getColor(this, R.color.black))
         if (contador < 6) {
             val operators = listOf("+", "-")
             val num1 = Random.nextInt(0, 100)
@@ -92,6 +95,8 @@ class GameActivity : AppCompatActivity() {
             buttonVerify.isEnabled = true
             viewResposta.visibility = View.INVISIBLE
         } else {
+            viewResposta.visibility = View.INVISIBLE
+            viewExpression.visibility = View.INVISIBLE
             buttonNext.isEnabled = false
             buttonVerify.isEnabled = false
             buttonFinish.isEnabled = true
@@ -99,21 +104,24 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    fun verifyAnswer(view: View){
+    fun verifyAnswer(view: View) {
         try {
             val answer = editAnswer.text.toString().toInt()
-            if (answer == resposta){
+            val color: ColorDrawable
+            if (answer == resposta) {
                 viewResposta.text = "Correto!"
                 jogador.rights++
+                color = ColorDrawable(ContextCompat.getColor(this, R.color.mygreen))
             } else {
+                color = ColorDrawable(ContextCompat.getColor(this, R.color.myred))
                 viewResposta.text = "Incorreto!"
             }
-
+            tela.background = color
             viewResposta.visibility = View.VISIBLE
             buttonVerify.isEnabled = false
             buttonNext.isEnabled = true
             if (contador == 5) contador++
-        } catch (ex: NumberFormatException){
+        } catch (ex: NumberFormatException) {
             Toast.makeText(this, "Insira um número válido!", Toast.LENGTH_SHORT).show()
         }
     }
@@ -121,5 +129,6 @@ class GameActivity : AppCompatActivity() {
     fun finish(view: View) {
         val intent = Intent(this, FinalActivity::class.java)
         intent.putExtra("user", jogador)
+        startActivity(intent)
     }
 }
