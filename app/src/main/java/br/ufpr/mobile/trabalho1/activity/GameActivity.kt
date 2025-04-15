@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -77,9 +78,13 @@ class GameActivity : AppCompatActivity() {
         } ?: throw RuntimeException("Intent está null")
     }
 
+    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+
     @SuppressLint("SetTextI18n")
     fun nextQuestion() {
         contador++
+        buttonNext.isEnabled = false
+        editAnswer.text = "".toEditable()
         tela.background = ColorDrawable(ContextCompat.getColor(this, R.color.black))
         if (contador < 6) {
             val operators = listOf("+", "-")
@@ -101,6 +106,8 @@ class GameActivity : AppCompatActivity() {
             buttonVerify.isEnabled = false
             buttonFinish.isEnabled = true
             buttonFinish.visibility = View.VISIBLE
+            editAnswer.visibility = View.GONE
+            buttonVerify.visibility = View.GONE
         }
     }
 
@@ -114,7 +121,7 @@ class GameActivity : AppCompatActivity() {
                 color = ColorDrawable(ContextCompat.getColor(this, R.color.mygreen))
             } else {
                 color = ColorDrawable(ContextCompat.getColor(this, R.color.myred))
-                viewResposta.text = "Incorreto!"
+                viewResposta.text = "Incorreto!\nEra para ser $resposta"
             }
             tela.background = color
             viewResposta.visibility = View.VISIBLE
@@ -130,5 +137,6 @@ class GameActivity : AppCompatActivity() {
         val intent = Intent(this, FinalActivity::class.java)
         intent.putExtra("user", jogador)
         startActivity(intent)
+        this.finish()
     }
 }

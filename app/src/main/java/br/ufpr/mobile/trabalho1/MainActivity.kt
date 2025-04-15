@@ -39,5 +39,6 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("user", user)
 
         startActivity(intent)
+        this.finish()
     }
 }
